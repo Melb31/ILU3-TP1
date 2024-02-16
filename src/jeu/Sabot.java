@@ -1,11 +1,37 @@
 package jeu;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import items.Carte;
 
-public class Sabot {
+public class Sabot implements Iterator<Carte>{
 	private Carte[] cartes;
 	private int nbCartes;
 	private int capacite;
+	private int indiceIterator=0;
+	private boolean nextEffectue=false;
+	
+	@Override
+	public boolean hasNext() {
+		return indiceIterator < nbCartes;
+	}
+
+	@Override
+	public Carte next() {
+		if(hasNext()) {
+			Carte carte=cartes[indiceIterator];
+			indiceIterator++;
+			nextEffectue=true;
+			return carte;
+		}
+		else {
+			throw new NoSuchElementException();}
+		}
+	
+	
+	
+	
 	public Sabot(int capacite) {
 		cartes= new Carte[capacite];
 		nbCartes=0;
@@ -38,7 +64,9 @@ public class Sabot {
 			ajouterCarte(cartesAjoutees[i]);
 		}
 	}
-	
+
+
+
 	
 
 }
