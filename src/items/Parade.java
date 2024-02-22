@@ -13,17 +13,20 @@ public class Parade extends Bataille {
 		switch (type) {
 		case "feu": {
 			str+=type+" vert";
+			return str;
 		}
 		case "essence":{
 			str+=" remplissage d'"+type;
+			return str;
 		}
 		case"accident":{
 			str+=" reparation";
+			return str;
 		}
 		default:{
 			str+=" roue de secours";
+			return str;
 		}
-		return str;
 	}
 }
 }

@@ -7,15 +7,15 @@ import java.util.NoSuchElementException;
 import items.Carte;
 
 public class Sabot{
-	private Carte[] cartes;
-	private int nbCartes;
+	public Carte[] cartes;
+	public int nbCartes;
 	private int capacite;
 	private int nbrOpe=0;
+	
 	
 	public Iterator<Carte> iterator(){
 		return new Iterateur();
 	}
-	
 	
 	private class Iterateur implements Iterator<Carte>{
 		private int indiceIterator=0;
@@ -47,8 +47,12 @@ public class Sabot{
 			cartes[indiceIterator]=null;
 		}
 		else {
-		for(int i=indiceIterator-1;i  < nbCartes -1;i++) {
+		for(int i=indiceIterator-1; i  < nbCartes -1;i++) {
 			cartes[i]=cartes[i+1];
+			System.out.println("remplace");
+			System.out.println(cartes[i]);
+			System.out.println("par");
+			System.out.println(cartes[i+1]);
 		}
 
 		}
@@ -87,7 +91,7 @@ public class Sabot{
 		}
 	}
 	
-	private void ajouterFamilleCarte(Carte carte) {
+	public void ajouterFamilleCarte(Carte carte) {
 		int nb=carte.getNombre();
 		for(int i=0; i<nb;i++) {
 			ajouterCarte(carte);
@@ -101,13 +105,14 @@ public class Sabot{
 	}
 	
 	
-	private void piocher() {
+	public void piocher() {
 		Iterator<Carte> iter= iterator();
+		Carte carte=null;
 		while(iter.hasNext()) {
-			iter.next();
+			carte=iter.next();
 		
 		}
-		
+		System.out.println("Je pioche : "+ carte.toString());
 		iter.remove();
 		}
 

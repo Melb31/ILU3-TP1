@@ -11,18 +11,21 @@ public class Botte extends Probleme{
 		
 		switch (type) {
 		case "feu": {
-			str+=type+" véhicule prioritaire";
+			str+=type+" vï¿½hicule prioritaire";
+			return str;
 		}
 		case "essence":{
 			str+=" citerne d'"+type;
+			return str;
 		}
 		case"accident":{
 			str+=" as du volant";
+			return str;
 		}
 		default:{
 			str+=" increvable";
+			return str;
 		}
-		return str;
 	}
 }
 }
