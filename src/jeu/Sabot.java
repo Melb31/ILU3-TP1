@@ -1,35 +1,69 @@
 package jeu;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import items.Carte;
 
-public class Sabot implements Iterator<Carte>{
+public class Sabot{
 	private Carte[] cartes;
 	private int nbCartes;
 	private int capacite;
-	private int indiceIterator=0;
-	private boolean nextEffectue=false;
+	private int nbrOpe=0;
 	
-	@Override
+	public Iterator<Carte> iterator(){
+		return new Iterateur();
+	}
+	
+	
+	private class Iterateur implements Iterator<Carte>{
+		private int indiceIterator=0;
+		private boolean nextEffectue=false;
+		private int nbOpeRef=nbrOpe;
+	
 	public boolean hasNext() {
 		return indiceIterator < nbCartes;
 	}
 
-	@Override
 	public Carte next() {
+		Carte carte=null;
 		if(hasNext()) {
-			Carte carte=cartes[indiceIterator];
+			carte=cartes[indiceIterator];
 			indiceIterator++;
 			nextEffectue=true;
-			return carte;
+	
 		}
 		else {
 			throw new NoSuchElementException();}
+		
+	return carte;}
+	
+	public void remove() {
+		if(nbCartes < 1 || ! nextEffectue) {
+			throw new IllegalStateException();		}
+		
+		if(!hasNext()) {
+			cartes[indiceIterator]=null;
 		}
+		else {
+		for(int i=indiceIterator-1;i  < nbCartes -1;i++) {
+			cartes[i]=cartes[i+1];
+		}
+
+		}
+
+		nbCartes--;
+		nbrOpe++;
+		nbOpeRef++;
+		
+	}
+	private void verificationConcurrence() {
+		if (nbrOpe!=nbOpeRef) {
+			throw new ConcurrentModificationException();
+		}}
 	
-	
+	}
 	
 	
 	public Sabot(int capacite) {
@@ -46,6 +80,7 @@ public class Sabot implements Iterator<Carte>{
 		if (nbCartes < capacite) {
 			cartes[nbCartes]=carte;
 			nbCartes++;
+			nbrOpe++;
 		}
 		else {
 			throw new  ArrayIndexOutOfBoundsException("Le sabot est plein");
@@ -64,6 +99,17 @@ public class Sabot implements Iterator<Carte>{
 			ajouterCarte(cartesAjoutees[i]);
 		}
 	}
+	
+	
+	private void piocher() {
+		Iterator<Carte> iter= iterator();
+		while(iter.hasNext()) {
+			iter.next();
+		
+		}
+		
+		iter.remove();
+		}
 
 
 
