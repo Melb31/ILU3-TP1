@@ -28,6 +28,9 @@ public class Attaque extends Bataille {
 			return str;
 		}
 	}
+		
+
 }
+
 
 }

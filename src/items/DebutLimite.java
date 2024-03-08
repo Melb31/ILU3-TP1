@@ -8,7 +8,10 @@ public class DebutLimite extends Limite{
 	
 	@Override
 	public String toString() {
-		String str="Vitesse limitée à 50 km";
+		String str="Vitesse limitï¿½e ï¿½ 50 km";
 		return str;
 	}
-}
+	
+
+	}
+
