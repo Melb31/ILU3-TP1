@@ -19,10 +19,15 @@ public class MainAsListe implements IMain{
 	}
 
 	public void jouer(Carte carte) {
-		assert ( ! liste.contains(carte));
+		assert (liste.contains(carte));
 		liste.remove(carte);
 
 		
+	}
+	
+	@Override
+	public String toString() {
+		return liste.toString();
 	}
 
 }

@@ -1,8 +1,11 @@
 package jeu;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import items.Borne;
 import items.Carte;
 
 public class Joueur {
@@ -37,13 +40,30 @@ public class Joueur {
 	}
 	
 	private Carte prendreCarte(List<Carte> sabot) {
-		if ( sabot.size()==0) {
-			return null;
+		Carte carte=null;
+		for(ListIterator<Carte> it= sabot.listIterator();it.hasNext();) {
+			it.next();
+			if( ! it.hasNext() ) {
+				carte=it.next();
+				donner(carte);
+				return carte;
+			}
 		}
-		for(ListIterator<Carte> it= sabot.listIterator()) {
-			
-		}
-		return ;
+		return carte;
+	}
+	
+	public void deposer(Borne borne) {
+		zoneDeJeu.collecBornes.add(borne);
 
 	}
+	
+	public int donnerKmParcourus() {
+		int kmParc=0;
+		Collection<Borne> collec=zoneDeJeu.collecBornes;
+		for(Iterator<Borne> it = collec.iterator(); it.hasNext() ;  ) {
+			kmParc+=it.next().getKm();
+		}
+		return kmParc;
+	}
+	
 }
