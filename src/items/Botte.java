@@ -11,7 +11,7 @@ public class Botte extends Probleme{
 		
 		switch (type) {
 		case "feu": {
-			str+=type+" v�hicule prioritaire";
+			str+=type+" véhicule prioritaire";
 			return str;
 		}
 		case "essence":{

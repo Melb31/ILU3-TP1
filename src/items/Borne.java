@@ -21,5 +21,9 @@ public class Borne extends Carte {
 		}
 		return false;
 	}
+	
+	public String toString() {
+		return "Carte : Borne " + km +" km ";
+	}
 
 }

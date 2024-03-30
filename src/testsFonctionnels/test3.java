@@ -8,6 +8,6 @@ import items.Probleme.Type;
 public class test3 {
 	public static void main(String[] args) {
 		JeuDeCartes jeudecartes= new JeuDeCartes();
-		
+		System.out.println(jeudecartes.checkCount());
 	}
 }
