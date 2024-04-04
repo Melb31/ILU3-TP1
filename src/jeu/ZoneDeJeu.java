@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+import items.Bataille;
 import items.Borne;
+import items.Botte;
 import items.Carte;
+import items.Limite;
 
 public class ZoneDeJeu {
-	public List<Carte> pileLimites= new ArrayList<Carte>();
-	public List<Carte> pileBatailles= new ArrayList<Carte>();
+	public List<Limite> pileLimites= new ArrayList<Limite>();
+	public List<Bataille> pileBatailles= new ArrayList<>();
 	public Collection<Borne> collecBornes= new ArrayList<Borne>();
-	public NavigableSet<Carte> ensBottes= new TreeSet<Carte>();
-	
+	public NavigableSet<Botte> ensBottes= new TreeSet<>();
+	// jsp quoi mettre type
 }

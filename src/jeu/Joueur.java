@@ -5,9 +5,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import items.Attaque;
+import items.Bataille;
 import items.Borne;
+import items.Botte;
 import items.Carte;
 import items.FinLimite;
+import items.Limite;
+import items.Parade;
+import items.Probleme.Type;
 
 public class Joueur {
 	private String nom;
@@ -41,12 +47,11 @@ public class Joueur {
 	}
 	
 	
-	private Carte derniereCarteListe(List<Carte> sabot) {
+	private < T extends Carte> Carte derniereCarteListe(Collection<T> sabot) {
 		Carte carte=null;
-		for(ListIterator<Carte> it= sabot.listIterator();it.hasNext();) {
-			it.next();
+		for(Iterator<T> it= sabot.iterator();it.hasNext();) {
+			carte=it.next();
 			if( ! it.hasNext() ) {
-				carte=it.next();
 				return carte;
 			}
 	} 
@@ -55,7 +60,7 @@ public class Joueur {
 	}
 	
 	
-	public Carte prendreCarte(List<Carte> sabot) {
+	public < T extends Carte> Carte prendreCarte(Collection<T> sabot) {
 		Carte carte=derniereCarteListe(sabot);
 		donner(carte);
 		return carte;
@@ -65,6 +70,20 @@ public class Joueur {
 	public void deposer(Borne borne) {
 		zoneDeJeu.collecBornes.add(borne);
 
+	}
+
+	public void deposer(Botte botte) {
+		zoneDeJeu.ensBottes.add(botte);
+
+	}
+	
+	public void deposer(Limite limite) {
+		zoneDeJeu.pileLimites.add(limite);
+
+	}
+	
+	public void deposer(Bataille bataille) {
+		zoneDeJeu.pileBatailles.add(bataille);
 	}
 	
 	public int donnerKmParcourus() {
@@ -78,12 +97,37 @@ public class Joueur {
 	
 	public int donnerLimitationVitesse() {
 		int limite=50;
-		List<Carte> pileLimites=zoneDeJeu.pileLimites;
-		if (pileLimites.isEmpty() || derniereCarteListe(pileLimites).equals( new FinLimite(1)) ) {
+		List<Limite> pileLimites=zoneDeJeu.pileLimites;
+		if (pileLimites.isEmpty() || derniereCarteListe(pileLimites).equals( new FinLimite(1)) 
+				|| zoneDeJeu.ensBottes.contains(new Botte(1, Type.FEU))) {
 			limite=200;
 		}
 				
 		return limite;
+
+	}
+	
+	private boolean estBloque() {
+		boolean ok=true;
+
+		if ( zoneDeJeu.pileBatailles.isEmpty() && 
+				zoneDeJeu.ensBottes.contains(new Botte(1, Type.FEU))) {
+			ok=false;
+		}
+		else if(derniereCarteListe(zoneDeJeu.ensBottes).equals(new Parade(Type.FEU, 1))) {
+			 ok=false;
+		}
+		else if (derniereCarteListe(zoneDeJeu.pileBatailles).equals(new Attaque(1, Type.FEU))
+				&& 
+				zoneDeJeu.ensBottes.contains(new Botte(1, Type.FEU))){
+			ok=false;
+		}
+		// a finir il reste dernier
+		
+		
+		
+		
+		return ok;
 
 	}
 	
