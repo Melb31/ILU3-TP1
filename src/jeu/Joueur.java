@@ -7,6 +7,7 @@ import java.util.ListIterator;
 
 import items.Borne;
 import items.Carte;
+import items.FinLimite;
 
 public class Joueur {
 	private String nom;
@@ -39,17 +40,26 @@ public class Joueur {
 
 	}
 	
-	private Carte prendreCarte(List<Carte> sabot) {
+	
+	private Carte derniereCarteListe(List<Carte> sabot) {
 		Carte carte=null;
 		for(ListIterator<Carte> it= sabot.listIterator();it.hasNext();) {
 			it.next();
 			if( ! it.hasNext() ) {
 				carte=it.next();
-				donner(carte);
 				return carte;
 			}
-		}
+	} 
+			return carte;
+	
+	}
+	
+	
+	public Carte prendreCarte(List<Carte> sabot) {
+		Carte carte=derniereCarteListe(sabot);
+		donner(carte);
 		return carte;
+
 	}
 	
 	public void deposer(Borne borne) {
@@ -64,6 +74,17 @@ public class Joueur {
 			kmParc+=it.next().getKm();
 		}
 		return kmParc;
+	}
+	
+	public int donnerLimitationVitesse() {
+		int limite=50;
+		List<Carte> pileLimites=zoneDeJeu.pileLimites;
+		if (pileLimites.isEmpty() || derniereCarteListe(pileLimites).equals( new FinLimite(1)) ) {
+			limite=200;
+		}
+				
+		return limite;
+
 	}
 	
 }
