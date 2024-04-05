@@ -11,6 +11,6 @@ public class TestJoueur {
 		j.deposer(new Borne(4,30));
 		j.deposer(new Borne(4,10));
 		j.deposer(new Borne(4,10));
-		System.out.println("Nombre de km :"+ j.donnerKmParcourus());
+		System.out.println("Nombre de km :"+ j.zoneDeJeu.donnerKmParcourus());
 	}
 }

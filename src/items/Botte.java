@@ -28,5 +28,8 @@ public class Botte extends Probleme{
 		}
 	}
 }
+		public int compareTo(Botte botte) {
+			return this.toString().compareTo(botte.toString()); 
+		}
 
 }
