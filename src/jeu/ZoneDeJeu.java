@@ -113,4 +113,11 @@ public class ZoneDeJeu {
 		return ok;
 
 	}
+	
+	
+	private boolean estDepotAutorise(Carte carte) {
+		//TODO
+		return true;
+
+	}
 }
