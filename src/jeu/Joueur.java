@@ -59,24 +59,24 @@ public class Joueur {
 
 	}
 	
-	public void deposer(Borne borne) {
-		zoneDeJeu.ajouter(borne);
-
-	}
-
-	public void deposer(Botte botte) {
-		zoneDeJeu.ajouter(botte);
-
-	}
-	
-	public void deposer(Limite limite) {
-		zoneDeJeu.ajouter(limite);
-
-	}
-	
-	public void deposer(Bataille bataille) {
-		zoneDeJeu.ajouter(bataille);
-	}
+//	public void deposer(Borne borne) {
+//		zoneDeJeu.ajouter(borne);
+//
+//	}
+//
+//	public void deposer(Botte botte) {
+//		zoneDeJeu.ajouter(botte);
+//
+//	}
+//	
+//	public void deposer(Limite limite) {
+//		zoneDeJeu.ajouter(limite);
+//
+//	}
+//	
+//	public void deposer(Bataille bataille) {
+//		zoneDeJeu.ajouter(bataille);
+//	}
 	
 	
 	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
@@ -105,7 +105,9 @@ public class Joueur {
 		return coupsDefausses;
 	}
 	
-	
+	public boolean deposer(Carte c) {
+		return zoneDeJeu.deposer(c);
+	}
 	
 
 	

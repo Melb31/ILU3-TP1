@@ -41,18 +41,18 @@ public class ZoneDeJeu {
 	}
 	
 	
-	public void ajouter(Limite carte) {
-		pileLimites.add(carte);
-	}
-	public void ajouter(Bataille carte) {
-		pileBatailles.add(carte);
-	}
-	public void ajouter(Borne carte) {
-		collecBornes.add(carte);
-	}
-	public void ajouter(Botte carte) {
-		ensBottes.add(carte);
-	}
+//	public void ajouter(Limite carte) {
+//		pileLimites.add(carte);
+//	}
+//	public void ajouter(Bataille carte) {
+//		pileBatailles.add(carte);
+//	}
+//	public void ajouter(Borne carte) {
+//		collecBornes.add(carte);
+//	}
+//	public void ajouter(Botte carte) {
+//		ensBottes.add(carte);
+//	}
 	
 	public < T extends Carte> Carte derniereCarteListe(Collection<T> sabot) {
 		Carte carte=null;
@@ -165,7 +165,7 @@ private boolean estDepotLimiteAutorise(Limite carte) {
 	
 	
 	
-	public boolean estDepotAutorise(Carte carte) {
+	protected boolean estDepotAutorise(Carte carte) {
 		// carte : borne
 		if(  carte instanceof Borne) {
 			Borne BCarte= (Borne) carte;
@@ -190,6 +190,32 @@ private boolean estDepotLimiteAutorise(Limite carte) {
 
 	}
 	
+public boolean deposer(Carte c) {
+	if ( ! estDepotAutorise(c)) {
+		return false;
+	}
+	if( c instanceof Borne) {
+		collecBornes.add((Borne) c);
+	}
+	else if (c instanceof Botte) {
+		Botte cB= (Botte) c;
+		ensBottes.add((Botte) c);
+		if(pileBatailles.contains(new Attaque(1, cB.getType()))) {
+			pileBatailles.remove(new Attaque(1, cB.getType()));
+		}
+		}
+	else if ( c instanceof Limite) {
+		pileLimites.add((Limite) c);
+	}
+	else if (c instanceof Bataille) {
+		pileBatailles.add((Bataille) c);
+	}
+	
+	
+	
+	return true;
+
+}
 	
 	
 	

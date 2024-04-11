@@ -80,7 +80,7 @@ public class Sabot{
 		return nbCartes==0;
 	}
 	
-	private void ajouterCarte(Carte carte) {
+	public void ajouterCarte(Carte carte) {
 		if (nbCartes < capacite) {
 			cartes[nbCartes]=carte;
 			nbCartes++;
@@ -91,7 +91,7 @@ public class Sabot{
 		}
 	}
 	
-	public void ajouterFamilleCarte(Carte carte) {
+	private void ajouterFamilleCarte(Carte carte) {
 		int nb=carte.getNombre();
 		for(int i=0; i<nb;i++) {
 			ajouterCarte(carte);
