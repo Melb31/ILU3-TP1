@@ -1,9 +1,11 @@
 package jeu;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 import items.Attaque;
 import items.Bataille;
@@ -75,6 +77,35 @@ public class Joueur {
 	public void deposer(Bataille bataille) {
 		zoneDeJeu.ajouter(bataille);
 	}
+	
+	
+	public Set<Coup> coupsPossibles(Set<Joueur> participants) {
+		Set<Coup> coupsPossibles = new HashSet<>();
+		for(Iterator<Joueur> it= participants.iterator();it.hasNext();) {
+			Joueur jCible=it.next();
+			for(Iterator<Carte> it2= main.iterator();it2.hasNext();) {
+				Carte carte=it2.next();
+				Coup coup=new Coup(carte,jCible);
+				if (coup.estValide(this)) {
+					coupsPossibles.add(coup);
+					
+				}	
+			}
+		}		
+		return coupsPossibles;
+		
+	}
+	
+	public Set<Coup> coupsDefausse() {
+		Set<Coup> coupsDefausses = new HashSet<>();
+		for(Iterator<Carte> it= main.iterator();it.hasNext();) {
+			coupsDefausses.add(new Coup(it.next(),null));
+				
+		}
+		return coupsDefausses;
+	}
+	
+	
 	
 
 	

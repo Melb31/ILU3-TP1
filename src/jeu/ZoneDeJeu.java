@@ -121,7 +121,7 @@ public class ZoneDeJeu {
 	}
 	
 	
-	protected boolean estDepotBatailleAutorise(Bataille carte) {
+	private boolean estDepotBatailleAutorise(Bataille carte) {
 		if( ensBottes.contains(new Botte(1, carte.getType()))) {
 			return false;
 		}
@@ -148,7 +148,7 @@ public class ZoneDeJeu {
 				
 			}
 			
-protected boolean estDepotLimiteAutorise(Limite carte) {
+private boolean estDepotLimiteAutorise(Limite carte) {
 		Limite sommetL=(Limite) derniereCarteListe(pileLimites);
 		if( ! aBottePrioritaire() && donnerLimitationVitesse() == 50
 				|| sommetL==null || sommetL instanceof FinLimite ) {
@@ -165,7 +165,7 @@ protected boolean estDepotLimiteAutorise(Limite carte) {
 	
 	
 	
-	private boolean estDepotAutorise(Carte carte) {
+	public boolean estDepotAutorise(Carte carte) {
 		// carte : borne
 		if(  carte instanceof Borne) {
 			Borne BCarte= (Borne) carte;
