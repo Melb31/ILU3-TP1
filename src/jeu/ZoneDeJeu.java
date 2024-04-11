@@ -8,12 +8,15 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+import items.Attaque;
 import items.Bataille;
 import items.Borne;
 import items.Botte;
 import items.Carte;
+import items.DebutLimite;
 import items.FinLimite;
 import items.Limite;
+import items.Parade;
 import items.Probleme.Type;
 
 public class ZoneDeJeu {
@@ -63,6 +66,9 @@ public class ZoneDeJeu {
 	
 	}
 	
+	public boolean aBottePrioritaire () {
+		return ensBottes.contains(Cartes.PRIORITAIRE);
+	}
 	
 	public int donnerKmParcourus() {
 		int kmParc=0;
@@ -75,7 +81,7 @@ public class ZoneDeJeu {
 	public int donnerLimitationVitesse() {
 		int limite=50;
 		if (pileLimites.isEmpty() || derniereCarteListe(pileLimites).equals( new FinLimite(1)) 
-				|| ensBottes.contains(Cartes.PRIORITAIRE)) {
+				|| aBottePrioritaire()) {
 			limite=200;
 		}
 				
@@ -85,7 +91,7 @@ public class ZoneDeJeu {
 	
 	public boolean estBloque() {
 		boolean ok=true;
-		boolean prioritaire=ensBottes.contains(Cartes.PRIORITAIRE);
+		boolean prioritaire=aBottePrioritaire();
 		if ( pileBatailles.isEmpty() && 
 				prioritaire) {
 			return false;
@@ -115,9 +121,76 @@ public class ZoneDeJeu {
 	}
 	
 	
+	protected boolean estDepotBatailleAutorise(Bataille carte) {
+		if( ensBottes.contains(new Botte(1, carte.getType()))) {
+			return false;
+		}
+		
+		if ( carte instanceof Attaque ){
+				Attaque carte2= (Attaque) carte;
+				return ! estBloque() ;				}
+		else {
+			Parade Pcarte= (Parade) carte;	
+			Bataille sommetB=(Bataille) derniereCarteListe(pileBatailles);
+			if(Pcarte.equals(Cartes.FEU_VERT) ) {
+				
+				return sommetB==null || sommetB.equals(Cartes.FEU_ROUGE) ||
+						( sommetB instanceof Parade &&  ! sommetB.equals(Cartes.FEU_VERT));
+				
+
+				}
+			else {
+				return (!(sommetB==null) && (sommetB instanceof Attaque && sommetB.getType() == carte.getType()));
+					
+					
+				}
+			}
+				
+			}
+			
+protected boolean estDepotLimiteAutorise(Limite carte) {
+		Limite sommetL=(Limite) derniereCarteListe(pileLimites);
+		if( ! aBottePrioritaire() && donnerLimitationVitesse() == 50
+				|| sommetL==null || sommetL instanceof FinLimite ) {
+			return true; }
+		if(carte instanceof FinLimite) {
+			return ( ! aBottePrioritaire() && donnerLimitationVitesse() != 50);
+		}
+		
+		return false;
+		
+	}
+	
+		
+	
+	
+	
 	private boolean estDepotAutorise(Carte carte) {
-		//TODO
-		return true;
+		// carte : borne
+		if(  carte instanceof Borne) {
+			Borne BCarte= (Borne) carte;
+			return !estBloque() && BCarte.getKm() <= donnerLimitationVitesse() && donnerKmParcourus() <= 1000;
+			
+			}
+		//carte : botte		
+		if ( carte instanceof Botte   ) {
+			return true;
+		}
+		//carte = limitation
+		if (carte instanceof Limite ) {
+				return estDepotLimiteAutorise((Limite) carte);
+		}
+		//carte : bataille
+
+		if( carte instanceof Bataille) {
+			return estDepotBatailleAutorise( (Bataille) carte);
+	
+		}
+		return false;
 
 	}
+	
+	
+	
+	
 }
