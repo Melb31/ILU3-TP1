@@ -39,14 +39,13 @@ public class Sabot{
 		
 	return carte;}
 	
+	
+	
 	public void remove() {
 		if(nbCartes < 1 || ! nextEffectue) {
 			throw new IllegalStateException();		}
 		
-		if(!hasNext()) {
-			cartes[indiceIterator]=null;
-		}
-		else {
+
 		for(int i=indiceIterator-1; i  < nbCartes -1;i++) {
 			cartes[i]=cartes[i+1];
 			System.out.println("remplace");
@@ -55,9 +54,10 @@ public class Sabot{
 			System.out.println(cartes[i+1]);
 		}
 
-		}
-
+		
+		nextEffectue=false;
 		nbCartes--;
+		indiceIterator--;
 		nbrOpe++;
 		nbOpeRef++;
 		
@@ -91,7 +91,7 @@ public class Sabot{
 		}
 	}
 	
-	private void ajouterFamilleCarte(Carte carte) {
+	public void ajouterFamilleCarte(Carte carte) {
 		int nb=carte.getNombre();
 		for(int i=0; i<nb;i++) {
 			ajouterCarte(carte);
@@ -105,15 +105,15 @@ public class Sabot{
 	}
 	
 	
-	public void piocher() {
+	public Carte piocher() {
 		Iterator<Carte> iter= iterator();
 		Carte carte=null;
 		while(iter.hasNext()) {
 			carte=iter.next();
 		
 		}
-		System.out.println("Je pioche : "+ carte.toString());
 		iter.remove();
+		return carte;
 		}
 
 

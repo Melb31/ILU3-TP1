@@ -27,6 +27,20 @@ public boolean estValide(Joueur joueur) {
 
 }
 
+public Carte getCarte() {
+	return carte;
+}
+
+public Joueur getjCible() {
+	return jCible;
+}
+
+@Override
+	public String toString() {
+		
+		return "poser la carte " + carte + "dans la zone de jeu de" +jCible;
+	}
+
 
 
  

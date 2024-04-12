@@ -9,16 +9,16 @@ import items.JeuDeCartes;
 
 public class Jeu {
 	private Set<Joueur> ensJoueurs;
-	private Sabot sabot;
+	public Sabot sabot;
 	
-	public Jeu(JeuDeCartes jeu) {
+	public Jeu() {
 		ensJoueurs=new HashSet<>();
-		remplirSabot(jeu);
+		remplirSabot(new JeuDeCartes() );
 	}
 	
 	
 	
-	private void inscrire(Joueur joueur) {
+	public void inscrire(Joueur joueur) {
 		ensJoueurs.add(joueur);
 
 	}
@@ -32,11 +32,39 @@ public class Jeu {
 
 	}
 	
-	private void distribuerCartes() {
+	public void distribuerCartes() {
 		for( int i=0; i< 6;i++) {
-			for(Iterator<Carte> it =sabot.iterator();it.hasNext();) {
-				
+			for(Iterator<Joueur> itJoueur =ensJoueurs.iterator();itJoueur.hasNext();) {
+				itJoueur.next().prendre( sabot.piocher());
 			}
 		}
 	}
-}
+	
+	public void joueurTour() {
+		System.out.println("\nDebut du tour");
+		for(Iterator<Joueur> itJoueur =ensJoueurs.iterator();itJoueur.hasNext();){
+			Joueur actJ=itJoueur.next();
+			Carte pioche=sabot.piocher();
+			actJ.prendre(pioche);
+			System.out.println("\nJoueur "+actJ + " a pioche " + pioche);
+			System.out.println("dans sa main :" + actJ.main);
+			Coup c=actJ.choisirCoup(ensJoueurs);
+			Carte carteC=c.getCarte();
+			actJ.retirerDeLaMain(carteC);
+			Joueur jCible=c.getjCible();
+			
+			if(jCible==null) {
+				sabot.ajouterCarte(carteC);
+				System.out.println("poser la carte "+ carteC+ " dans la pioche");
+			}
+			else {
+				jCible.deposer(carteC);
+				System.out.println("poser la carte "+ carteC+ "dans la zone de jeu de " +
+				jCible);
+			} }
+		System.out.println("Fin du tour\n");
+			} 
+	}
+		
+	
+

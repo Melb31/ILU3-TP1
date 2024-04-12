@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 import java.util.Set;
 
 import items.Attaque;
@@ -43,7 +44,7 @@ public class Joueur {
 		return nom;
 	}
 	
-	private void donner(Carte carte) {
+	public void prendre(Carte carte) {
 		main.prendre(carte);
 
 	}
@@ -54,7 +55,7 @@ public class Joueur {
 	
 	public < T extends Carte> Carte prendreCarte(Collection<T> sabot) {
 		Carte carte=zoneDeJeu.derniereCarteListe(sabot);
-		donner(carte);
+		prendre(carte);
 		return carte;
 
 	}
@@ -109,6 +110,44 @@ public class Joueur {
 		return zoneDeJeu.deposer(c);
 	}
 	
+	
+	public void retirerDeLaMain(Carte carte) {
+		main.jouer(carte);
 
+	}
+	
+	
+    private static Coup extraireCoupHasard(Set<Coup> setC) {
+        Random random=new Random();
+        int r=random.nextInt(setC.size());
+        Coup c=null;
+        for(Iterator<Coup> it=setC.iterator();it.hasNext() && r >=0;) {
+        	c=it.next();
+        	r--;
+        }
+        return c;
+    }
+	
+	
+	
+	public Coup choisirCoup( Set<Joueur> participants  ) {
+		Set<Coup> coupsPossibles= coupsPossibles(participants);
+		Coup choixC=null;
+		
+		if( ! coupsPossibles.isEmpty()) {	
+			choixC=extraireCoupHasard(coupsPossibles);
+		}
+		
+		else {
+			choixC=extraireCoupHasard(coupsDefausse());
+			
+		}
+
+		return choixC;
+	}
+	public void afficherMain() {
+		System.out.println("Main joueur :" + main);
+		
+	}
 	
 }
